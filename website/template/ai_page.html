@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI API</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background-image: url('https://www.creativefabrica.com/wp-content/uploads/2020/05/19/Abstract-Website-Background-with-Squares-Graphics-4157965-1-1-580x387.jpg');
+      background-size: cover; /* This ensures the background image covers the entire viewport */
+      background-repeat: no-repeat; /* Prevent the background image from repeating */
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .container {
+      max-width: 1000px;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the container */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    label, input, button {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 100%;
+      padding: 100px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 5px 10px; /* Adjust the padding to make the button smaller */
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .goback {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI API</h1>
+    <label for="inputText">Enter your text:</label>
+    <input type="text" id="inputText" placeholder="Type your text here">
+    <button onclick="processText()">Process Text</button>
+    <div id="output"></div>
+  </div>
+
+  <button class="goback" onclick="goBack">Go back to home</button>
+
+  <script>
+    function processText() {
+      var inputText = document.getElementById('inputText').value;
+      // Call your AI API here and handle the response
+      // For demonstration purposes, let's just display the input text as output
+      document.getElementById('output').innerHTML = `<p><strong>Processed Text:</strong> ${inputText}</p>`;
+    }
+
+    function goBack() {
+      // Add the logic to navigate back to the home page here
+      // For example, you can use window.location.href to redirect to the home page
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
