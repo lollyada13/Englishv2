@@ -8,8 +8,8 @@
     body {
       font-family: 'Times New Roman', Times, serif;
       background-image: url('https://www.creativefabrica.com/wp-content/uploads/2020/05/19/Abstract-Website-Background-with-Squares-Graphics-4157965-1-1-580x387.jpg');
-      background-size: cover; /* This ensures the background image covers the entire viewport */
-      background-repeat: no-repeat; /* Prevent the background image from repeating */
+      background-size: cover;
+      background-repeat: no-repeat;
       padding: 20px;
       box-sizing: border-box;
       display: flex;
@@ -25,7 +25,7 @@
     .container {
       max-width: 1000px;
       padding: 20px;
-      background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background to the container */
+      background-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 5px;
     }
@@ -35,11 +35,11 @@
     }
     input {
       width: 100%;
-      padding: 100px;
+      padding: 10px;
       box-sizing: border-box;
     }
     button {
-      padding: 5px 10px; /* Adjust the padding to make the button smaller */
+      padding: 5px 10px;
       background-color: #4CAF50;
       color: white;
       border: none;
@@ -49,6 +49,12 @@
     }
     button:hover {
       background-color: #45a049;
+    }
+    .output-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
     }
     .goback {
       position: absolute;
@@ -65,22 +71,48 @@
     <label for="inputText">Enter your text:</label>
     <input type="text" id="inputText" placeholder="Type your text here">
     <button onclick="processText()">Process Text</button>
-    <div id="output"></div>
+    <div id="output" class="output-box"></div> <!-- Output will be displayed in the box -->
+    <button id="readAloudButton" onclick="readAloud()">Read Aloud</button> <!-- Button to read the processed text aloud -->
   </div>
 
-  <button class="goback" onclick="goBack">Go back to home</button>
+  <button id="homeButton" class="goback" onclick="goBack()">Go back to home</button>
 
   <script>
     function processText() {
       var inputText = document.getElementById('inputText').value;
-      // Call your AI API here and handle the response
-      // For demonstration purposes, let's just display the input text as output
-      document.getElementById('output').innerHTML = `<p><strong>Processed Text:</strong> ${inputText}</p>`;
+
+      // Replace 'your-api-endpoint' with your actual API endpoint URL
+      fetch('https://api.nettoolkit.com/v1/account/test-api-keys', {
+        method: 'POST',
+        body: JSON.stringify({ input: inputText }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        var outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = `<p><strong>Processed Text:</strong> ${data.output}</p>`;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        var outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = `<p>Error processing text. Please try again later.</p>`;
+      });
+    }
+
+    function readAloud() {
+      var processedText = document.getElementById('output').innerText;
+      var utterance = new SpeechSynthesisUtterance(processedText);
+      speechSynthesis.speak(utterance);
     }
 
     function goBack() {
-      // Add the logic to navigate back to the home page here
-      // For example, you can use window.location.href to redirect to the home page
       window.location.href = "index.html";
     }
   </script>
